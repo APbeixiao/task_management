@@ -1,0 +1,5 @@
+fastapi==0.110.1
+pydantic==2.6.4
+starlette==0.37.2
+tortoise==0.1.1
+uvicorn==0.29.0
