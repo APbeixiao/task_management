@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>日程插件 - 光年(Light Year Admin V4)后台管理系统模板</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+  <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+  <meta name="author" content="yinqi">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <!--日程插件-->
+  <link href="js/fullcalendar/core/main.min.css" rel="stylesheet">
+  <link href='js/fullcalendar/daygrid/main.min.css' rel='stylesheet' />
+  <link href='js/fullcalendar/timegrid/main.min.css' rel='stylesheet' />
+  <link href='js/fullcalendar/list/main.min.css' rel='stylesheet' />
+  <!--时间选择插件-->
+  <link rel="stylesheet" href="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
+  <!--日期选择插件-->
+  <link rel="stylesheet" href="js/bootstrap-datepicker/bootstrap-datepicker3.min.css">
+  <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+
+            <div id="calendar" data-provide="fullcalendar"></div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- end 展示日程 -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!--日期选择器-->
+  <script type="text/javascript" src="js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+  <!--时间日期选择器-->
+  <script type="text/javascript" src="js/moment.js/moment.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript" src="js/moment.js/locale/zh-cn.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <!--日程插件-->
+  <script type="text/javascript" src="js/fullcalendar/core/main.min.js"></script>
+  <script type="text/javascript" src="js/fullcalendar/core/locales/zh-cn.js"></script>
+  <script type="text/javascript" src="js/fullcalendar/interaction/main.min.js"></script>
+  <script type="text/javascript" src="js/fullcalendar/daygrid/main.min.js"></script>
+  <script type="text/javascript" src="js/fullcalendar/timegrid/main.min.js"></script>
+  <script type="text/javascript" src="js/fullcalendar/list/main.min.js"></script>
+  <script type="text/javascript" src="js/fullcalendar/rrule/main.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <script type="text/javascript">
+    var ip = "http://127.0.0.1:8001"
+    var calendarEl = document.getElementById('calendar');
+    document.addEventListener('DOMContentLoaded', function () {
+      var myData = window.localStorage.getItem('userdata');
+      parsedData = JSON.parse(myData);
+      console.log(parsedData);
+      if (myData) {
+        // 发起 Ajax 请求
+
+        const requestData = {
+          assigned_to: parsedData.id,
+        };
+        $.ajax({
+          url: ip + "/task/gettask",
+          type: "GET",
+          contentType: "application/json",
+          data: requestData,
+          success: function (response) {
+            console.log(response);
+            const fullCalendarEvents = transformDataToFullCalendarFormat(response.data);
+            function transformDataToFullCalendarFormat(data) {
+              return data.map(item => ({
+                id: item.id,
+                title: item.name,
+                start: item.created_at, // 如果 created_at 是事件的开始时间  
+                end: item.deadline, // deadline 作为结束时间  
+                // 可以添加其他字段，例如：  
+
+              }));
+            }
+
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+              plugins: ['interaction', 'dayGrid', 'timeGrid', 'list', 'rrule'],
+              //height: 'parent',
+              header: {
+                left: 'today prev,next day',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+              },
+              buttonText: {
+                today: '今天',
+                month: '月',
+                week: '周',
+                day: '天',
+                list: '列表'
+              },
+              defaultView: 'dayGridMonth',
+              //navLinks: true, // 可以单击日/周名称导航视图。
+              //selectable: true, // 允许用户通过单击和拖动突出显示多天或多个时间段。
+              editable: false, // 确定是否可以修改日历上的事件。
+              eventLimit: true, // 当事件太多时允许“更多”链接
+              events: fullCalendarEvents,
+              dateClick: function (date, jsEvent, view) {
+                $('#modal-event').modal('show');
+              },
+              eventClick: function (date, jsEvent, view) {
+                $('#modal-view-event').find('.modal-title').text(date.event.title);
+                var time_str = formatDate(date.event.start, 'yyyy-MM-dd HH:mm:ss');
+                if (date.event.hasOwnProperty('end')) {
+                  time_str += ' - ' + formatDate(date.event.end, 'yyyy-MM-dd HH:mm:ss'); // 根据自己的需求格式化时间显示
+                }
+                $('#modal-view-event').find('.event-time').text(time_str);
+                if (date.event.extendedProps.hasOwnProperty('remark')) {
+                  $('#modal-view-event').find('.event-remark').text(date.event.extendedProps.remark);
+                }
+                $('#open-modal-edit').attr('data-id', date.event.id);
+                $('#modal-view-event').modal('show');
+              }
+            });
+
+            calendar.render();
+            calendar.setOption('locale', 'zh');
+
+
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            // handle error response
+          }
+        });
+      }
+
+
+
+    })
+
+
+    // 编辑日程
+    // function saveEvent() {
+    //   var title = $('#title').val(),
+    //     start_day = $('#start_day').val(),
+    //     start_time = $('#start_time').val(),
+    //     end_day = $('#end_day').val(),
+    //     end_time = $('#end_time').val(),
+    //     remark = $('#remark').val(), // 按个人需求，可记录到数据库
+    //     event_bg = $("input[name='event_bg']:checked").val(),
+    //     event_id = $('#event_id').val(),
+    //     event_params = {};
+
+    //   if (title.length == 0) {
+    //     alert('标题不能为空');  // 自行修改消息插件提示
+    //     return false;
+    //   } else {
+    //     event_params.title = title;
+    //   }
+    //   if (start_day.length == 0) {
+    //     alert('开始时间不能为空');
+    //     return false;
+    //   }
+    //   var start_str = start_day;
+    //   if (start_time.length > 0) {
+    //     start_str = start_day + 'T' + start_time + ':00';// 示例中只到分，如需设置秒，则自行更改，input配置HH:mm:ss
+    //   }
+    //   var start_date = new Date(start_str);
+    //   if (!isNaN(start_date.valueOf())) {
+    //     event_params.start = start_str;
+    //   } else {
+    //     alert('开始日期格式错误');
+    //     return false;
+    //   }
+    //   if (end_day.length > 0) {
+    //     var end_str = end_day;
+    //     if (end_time.length > 0) {
+    //       end_str = end_day + 'T' + end_time + ':00'; // 示例中只到分，如需设置秒，则自行更改，input配置HH:mm:ss
+    //     }
+    //     var end_date = new Date(end_str);
+    //     if (!isNaN(end_date.valueOf())) {
+    //       event_params.end = end_str;
+    //     } else {
+    //       alert('结束日期格式错误');
+    //       return false;
+    //     }
+    //   }
+    //   if (event_bg.length > 0) {
+    //     event_params.className = event_bg;
+    //   }
+    //   if ($.trim(remark).length > 0) {
+    //     event_params.remark = remark;
+    //   }
+
+    //   if (event_id > 0) {
+    //     // 提交修改
+    //     var eventObj = calendar.getEventById(event_id);
+    //     eventObj.setProp('title', event_params.title);
+    //     eventObj.setProp('classNames', event_params.className);
+    //     eventObj.setStart(event_params.start);
+    //     if (event_params.hasOwnProperty('end')) {
+    //       eventObj.setStart(event_params.end);
+    //     }
+    //     if (event_params.hasOwnProperty('remark')) {
+    //       eventObj.setExtendedProp('remark', event_params.remark);
+    //     }
+    //   } else {
+    //     // 提交新增
+    //     calendar.addEvent(event_params);
+    //   }
+    //   $('#event_form')[0].reset(); // 重置表单
+    //   $('#event_id').val('0'); // 重置为零
+    //   $('#modal-event').modal('hide');
+    // }
+
+    // // 打开编辑窗口
+    // $('#open-modal-edit').click(function () {
+    //   var event_id = $(this).attr('data-id'),
+    //     eventObj = calendar.getEventById(event_id);
+
+    //   $("#modal-event").find('#title').val(eventObj.title);
+    //   var start_day = formatDate(eventObj.start, 'yyyy-MM-dd'),
+    //     start_time = formatDate(eventObj.start, 'HH:mm');
+
+    //   $("#start_day").val(start_day);
+    //   $("#start_time").val(start_time);
+    //   if (eventObj.extendedProps.hasOwnProperty('remark')) {
+    //     $("#remark").val(eventObj.extendedProps.remark);
+    //   }
+    //   $("input:radio[value='" + eventObj.classNames[0] + "']").prop('checked', 'true');
+    //   $('#event_id').val(event_id); // 重置为零
+    //   $('#modal-view-event').modal('hide');
+    //   $('#modal-event').modal('show');
+    // });
+
+    // // 点击关闭按钮的处理
+    // $('.close').click(function () {
+    //   if ($(this).parents('.modal').has('#event_form')) {
+    //     $('#event_form')[0].reset(); // 重置表单
+    //     $('#event_id').val('0'); // 重置为零
+    //   }
+    // });
+
+    // // 点击取消的处理
+    // $('[data-dismiss]').click(function () {
+    //   if ($(this).parents('.modal').has('#event_form')) {
+    //     $('#event_form')[0].reset(); // 重置表单
+    //     $('#event_id').val('0'); // 重置为零
+    //   }
+    // });
+
+    // // 时间格式化
+    function formatDate(date = new Date(), fmt = 'yyyy-MM-dd HH:mm:ss') {
+      date = (typeof date === 'number' || typeof date === 'string') ? new Date(date) : date;
+
+      var o = {
+        'M+': date.getMonth() + 1, // 月份
+        'd+': date.getDate(), // 日
+        'h+': date.getHours() % 12 === 0 ? 12 : date.getHours() % 12, // 小时
+        'H+': date.getHours(), // 小时
+        'm+': date.getMinutes(), // 分
+        's+': date.getSeconds(), // 秒
+        'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
+        'S': date.getMilliseconds() // 毫秒
+      };
+      var week = {
+        '0': '\u65e5',
+        '1': '\u4e00',
+        '2': '\u4e8c',
+        '3': '\u4e09',
+        '4': '\u56db',
+        '5': '\u4e94',
+        '6': '\u516d'
+      };
+
+      if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+      }
+
+      if (/(E+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? '\u661f\u671f' : '\u5468') : '') + week[date.getDay() + '']);
+      }
+
+      for (var k in o) {
+        if (new RegExp('(' + k + ')').test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
+        }
+      }
+
+      return fmt;
+    }
+  </script>
+</body>
+
+</html>

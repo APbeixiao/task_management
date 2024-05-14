@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>文档列表 - 光年(Light Year Admin V4)后台管理系统模板</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+  <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+  <meta name="author" content="yinqi">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="js/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
+  <link href="css/animate.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="js/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+  <link href="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+  <link href="js/bootstrap-clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- 模态窗口代码-------------------------------------------------------------------------------- -->
+  <div class="container-fluid p-t-15">
+    <div class="modal fade" id="exampleModalChange" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalChangeLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="exampleModalChangeTitle">新增任务</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">任务名:</label>
+                <select class="custom-select" id="inputGroupSelect01">
+                  <option selected>请选择...</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <select class="custom-select" id="inputGroupSelect02">
+                  <option selected>请选择...</option>
+
+                </select>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button">新增</button>
+                </div>
+              </div>
+
+              <div style="margin-top: 20px; ">
+                <div class="card card-hover-shadow">
+                  <header class="card-header">
+                    <div class="card-title">人员<small></small></div>
+                    <ul class="card-actions">
+
+                      <li>
+                        <a href="#!" id="deletebtn" data-toggle="tooltip" title="" data-original-title="删除全部"><i
+                            class="mdi mdi-undo"></i></a>
+                      </li>
+                      <!-- <li>
+                        <a href="#!" data-toggle="tooltip" title="" data-original-title="重做"><i class="mdi mdi-redo"></i></a>
+                      </li>
+                      <li>
+                        <a href="#!" data-toggle="tooltip" title="" data-original-title="刷新"><i class="mdi mdi-refresh"></i></a>
+                      </li> -->
+                    </ul>
+                  </header>
+
+                  <!-- <div class="callout callout-info">鼠标移入时阴影加深 <code>.card-hover-shadow</code></div> -->
+                  <div class="card-body">
+
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="save">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 模态窗口代码-------------------------------------------------------------------------------- -->
+
+    <!-- 模态窗口代码-------------------------------------------------------------------------------- -->
+    <div class="container-fluid p-t-15">
+      <div class="modal fade" id="exampleModalChange2" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalChangeLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title" id="exampleModalChangeTitle">修改任务</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">任务名:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">内容:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-status" class="col-form-label">状态:</label>
+                  <input type="text" class="form-control" id="recipient-status">
+                </div>
+                <div class="form-group">
+                  <label for="formControldate">截止日期</label>
+                  <input class="form-control" type="text" id="formdate" data-provide="datetimepicker" name="datetime"
+                    placeholder="请选择具体时间" value="" data-side-by-side="true" data-format="YYYY-MM-DD HH:mm" />
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" id="save2">保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 模态窗口代码-------------------------------------------------------------------------------- -->
+      <div class="container-fluid p-t-15">
+        <div class="modal fade" id="exampleModalChange1" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalChangeLabel1" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalChangeTitle">修改人员</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+
+                  <div class="input-group">
+                    <select class="custom-select" id="inputGroupSelectedit">
+                      <option selected>请选择...</option>
+                    </select>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" id="addbtn1" type="button">新增</button>
+                    </div>
+                  </div>
+
+                  <div style="margin-top: 20px; ">
+                    <div class="card card-hover-shadow">
+                      <header class="card-header">
+                        <div class="card-title">人员<small></small></div>
+                        <ul class="card-actions">
+
+                          <li>
+                            <a href="#!" id="deletebtn1" data-toggle="tooltip" title="" data-original-title="删除全部"><i
+                                class="mdi mdi-undo"></i></a>
+                          </li>
+                          <!-- <li>
+                        <a href="#!" data-toggle="tooltip" title="" data-original-title="重做"><i class="mdi mdi-redo"></i></a>
+                      </li>
+                      <li>
+                        <a href="#!" data-toggle="tooltip" title="" data-original-title="刷新"><i class="mdi mdi-refresh"></i></a>
+                      </li> -->
+                        </ul>
+                      </header>
+
+                      <!-- <div class="callout callout-info">鼠标移入时阴影加深 <code>.card-hover-shadow</code></div> -->
+                      <div class="card-body" id="editcard">
+
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save1">保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 模态窗口代码-------------------------------------------------------------------------------- -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-toolbar d-flex flex-column flex-md-row">
+                <div class="toolbar-btn-action">
+                  <a class="btn btn-primary m-r-5" data-toggle="modal" data-target="#exampleModalChange"
+                    data-whatever="@mdo"><i class="mdi mdi-plus"></i> 新增</a>
+                  <!-- <a class="btn btn-success m-r-5 ajax-post confirm" href="http://www.lyear.com/doc_test.php"
+                target-form="ids"><i class="mdi mdi-check"></i> 启用</a>
+              <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a> -->
+                  <a class="btn btn-danger" href="#!" id="delete"><i class="mdi mdi-window-close"></i> 删除</a>
+                </div>
+
+                <form class="search-bar ml-md-auto" method="get" action="#!" role="form">
+                  <input type="hidden" name="search_field" id="search-field" value="title" />
+                  <div class="input-group ml-md-auto">
+                    <div class="input-group-prepend">
+                      <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" id="search-btn">标题</button>
+                      <div class="dropdown-menu" style="">
+                        <a class="dropdown-item" href="#!" data-field="title">标题</a>
+                        <a class="dropdown-item" href="#!" data-field="cat_name">栏目</a>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" name="keyword" placeholder="请输入名称">
+                  </div>
+                </form>
+              </div>
+              <div class="card-body">
+
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="check-all">
+                            <label class="custom-control-label" for="check-all"></label>
+                          </div>
+                        </th>
+                        <th>#</th>
+                        <th>项目名称</th>
+                        <th>项目内容</th>
+                        <th>截止日期</th>
+                        <th>项目人员</th>
+                        <!-- <th>状态</th>
+                    <th>进度</th> -->
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- <tr>
+                    <td>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input ids" name="ids[]" value="1" id="ids-1">
+                        <label class="custom-control-label" for="ids-1"></label>
+                      </div>
+                    </td>
+                    <td>1</td>
+                    <td>第01章 天涯思君不可忘</td>
+                    <td>《倚天屠龙记》</td>
+                    <td>金庸</td>
+                    <td>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+                      <a href="#!" class="badge badge-outline-info">都市小说</a>
+
+                    </td>
+
+                    <td>
+                      <div class="btn-group">
+                        <a class="btn btn-xs btn-default" href="#!" title="" data-toggle="tooltip"
+                          data-original-title="编辑"><i class="mdi mdi-pencil"></i></a>
+                        <a class="btn btn-xs btn-default ajax-get confirm" href="http://www.lyear.com/doc_test.php?id=1"
+                          title="" data-toggle="tooltip" data-original-title="删除"><i
+                            class="mdi mdi-window-close"></i></a>
+                      </div>
+                    </td>
+                  </tr> -->
+
+                    </tbody>
+                  </table>
+                </div>
+
+                <div id="pagination-container">
+                  <ul class="pagination justify-content-center" id="pagination-container"></ul>
+                </div>
+                <!-- <ul class="pagination">
+                  <li class="page-item disabled"><span class="page-link">上一页</span></li>
+                  <li class="page-item active"><span class="page-link">1</span></li>
+                  <li class="page-item"><a class="page-link" href="#1">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#1">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#1">4</a></li>
+                  <li class="page-item"><a class="page-link" href="#1">5</a></li>
+                  <li class="page-item disabled"><span class="page-link">...</span></li>
+                  <li class="page-item"><a class="page-link" href="#!">14452</a></li>
+                  <li class="page-item"><a class="page-link" href="#!">14453</a></li>
+                  <li class="page-item"><a class="page-link" href="#!">下一页</a></li>
+                </ul> -->
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+      <script type="text/javascript" src="js/jquery.min.js"></script>
+      <script type="text/javascript" src="js/popper.min.js"></script>
+      <script type="text/javascript" src="js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="js/lyear-loading.js"></script>
+      <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+      <script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+      <script type="text/javascript" src="js/main.min.js"></script>
+      <script type="text/javascript" src="js/jquery.min.js"></script>
+      <script type="text/javascript" src="js/jquery.min.js"></script>
+      <script type="text/javascript" src="js/popper.min.js"></script>
+      <script type="text/javascript" src="js/bootstrap.min.js"></script>
+      <!--日期选择器-->
+      <script type="text/javascript" src="js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+      <script type="text/javascript" src="js/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+      <!--时间日期选择器-->
+      <script type="text/javascript" src="js/moment.js/moment.min.js"></script>
+      <script type="text/javascript" src="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+      <script type="text/javascript" src="js/moment.js/locale/zh-cn.min.js"></script>
+      <!--时间选择器-->
+      <script type="text/javascript" src="js/bootstrap-clockpicker/bootstrap-clockpicker.min.js"></script>
+      <script type="text/javascript" src="js/main.min.js"></script>
+      <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+      <script>
+        var ip = "http://127.0.0.1:8001"
+        var limit = 10; // 示例值，根据实际情况设置  
+        var currentPage = 1; // 当前页码  
+        var totalPages = 0; // 总页数  
+        var myData = window.localStorage.getItem('userdata');
+        var parsedData = JSON.parse(myData);
+        document.addEventListener("DOMContentLoaded", function () {
+          // 获取 localStorage 中的数据
+
+          console.log(parsedData);
+          if (myData) {
+            // 发起 Ajax 请求
+            fetchData(1);
+
+            function initializeTableAndPagination(data, count) {
+              refreshTable(data);
+              totalPages = Math.ceil(count / limit);
+              renderPagination(currentPage, totalPages);
+              bindPaginationEvents();
+            }
+            // 渲染分页控件  
+            function renderPagination(currentPage, totalPages) {
+              // console.log(currentPage, totalPages);
+              var paginationHtml = '<ul class="pagination">';
+
+              // 添加首页按钮  
+              paginationHtml += '<li class="page-item ' + (currentPage === 1 ? 'disabled' : '') + '"><a class="page-link" href="#" data-page="1">首页</a></li>';
+
+              var maxButtons = 5; // 定义最多显示几个页码按钮（不包括首页和尾页）  
+              var startPage, endPage;
+
+              if (totalPages <= maxButtons + 2) {
+                // 如果总页数小于或等于最大页码数加2（首页和尾页），则显示所有页码  
+                startPage = 1;
+                endPage = totalPages;
+              } else {
+                // 计算要显示的页码范围  
+                var delta = Math.floor(maxButtons / 2);
+                if (currentPage - delta < 1) {
+                  startPage = 1;
+                  endPage = maxButtons + 1;
+                } else if (currentPage + delta > totalPages) {
+                  startPage = totalPages - maxButtons;
+                  endPage = totalPages;
+                } else {
+                  startPage = currentPage - delta;
+                  endPage = currentPage + delta;
+                }
+              }
+
+              // 添加中间页码按钮  
+              for (var page = startPage; page <= endPage; page++) {
+                var activeClass = (page === currentPage) ? 'active' : '';
+                paginationHtml += '<li class="page-item ' + activeClass + '"><a class="page-link" href="#" data-page="' + page + '">' + page + '</a></li>';
+              }
+
+              // 如果页码过多，则添加省略号  
+              if (startPage > 2) {
+                paginationHtml += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+              }
+              if (endPage < totalPages - 1) {
+                paginationHtml += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+              }
+
+              // 添加尾页按钮  
+              paginationHtml += '<li class="page-item ' + (currentPage === totalPages ? 'disabled' : '') + '"><a class="page-link" href="#" data-page="' + totalPages + '">尾页</a></li>';
+
+              paginationHtml += '</ul>';
+
+              $('#pagination-container').html(paginationHtml);
+            }
+            function bindPaginationEvents() {
+              $('.page-link').off('click').on('click', function (e) {
+                e.preventDefault();
+                var page = $(this).data('page');
+                if (page !== currentPage) {
+                  currentPage = page; // 更新当前页码  
+                  fetchData(page); // 获取新页码的数据  
+                  renderPagination(); // 重新渲染分页控件  
+                }
+              });
+            }
+
+
+            function refreshTable(data) {
+              var tbody = $('table tbody');
+              tbody.empty();
+
+              // 遍历数据数组，依次将每个对象的数据填充到表格中
+              data.forEach(function (item, index) {
+                var row = document.createElement('tr');
+
+                var usersHtml = '';
+                if (item.users.length == 0) {
+                  usersHtml = '<p class="small">无人员分配</p>';
+
+                } else {
+                  item.users.forEach(function (user) {
+                    usersHtml += `<a href="#!" class="badge badge-outline-info" style="margin-left: 5px;">${user.username}</a>`;
+                  });
+                }
+
+                row.innerHTML = `
+<td>
+<div class="custom-control custom-checkbox">
+<input type="checkbox" class="custom-control-input ids" name="ids" value="${item.taskid}" id="ids-${item.taskid}">
+<label class="custom-control-label" for="ids-${item.taskid}"></label>
+</div>
+</td>
+<td>${index}</td>
+<td>${item.name}</td>
+<td>${item.description}</td>
+<td>${item.deadline}</td>
+<td>${usersHtml}</td>
+<td>
+<div class="btn-group">
+<a class="btn btn-xs btn-default" href="#!" title=""  data-toggle="modal" data-target="#exampleModalChange2" data-id="${item.taskid}" data-original-title="编辑"><i class="mdi mdi-pencil"></i></a>
+<a class="btn btn-xs btn-default" href="#!" title=""  data-toggle="modal" data-target="#exampleModalChange1" data-id="${item.taskid}" data-original-title="编辑"><i class="mdi mdi-account"></i></a>
+<a class="btn btn-xs btn-default delete" value="${item.taskid}" title="" data-toggle="tooltip" data-original-title="删除"><i class="mdi mdi-window-close"></i></a>
+</div>
+</td>
+`;
+
+                tbody.append(row);
+              });
+
+              // 格式化日期函数
+              function formatDate(dateString) {
+                var date = new Date(dateString);
+                return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+              }
+
+            }
+
+
+
+            function fetchData(page) {
+              $.ajax({
+                url: ip + "/task/get_create_task",
+                type: "GET",
+                contentType: "application/json",
+                data: { created_id: parsedData.id, limit: limit, skip: (page - 1) * limit },
+                success: function (response) {
+                  // handle success response
+                  if (response.code == "200") {
+                    var data = response.data;
+                    var count = response.count;
+                    initializeTableAndPagination(data, count);
+
+
+                  } else {
+                    $.notify({
+                      // options
+                      message: '失败'
+                    }, {
+                      // settings
+                      type: 'danger'
+                    });
+                  }
+
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                  // handle error response
+                }
+              });
+            }
+            $(document).ready(function () {
+              $(document).on('click', '.delete', function () {
+                var value = $(this).attr('value');
+                $.ajax({
+                  url: ip + "/task/delete_TaskAssignment",
+                  type: "POST",
+                  contentType: "application/json",
+                  data: JSON.stringify({
+                    id: value
+                  }),
+                  success: function (data) {
+                    // handle success response
+                    console.log(data);
+                    if (data.code == "200") {
+                      $.notify({
+                        // options
+                        message: '删除成功'
+                      }, {
+                        // settings
+                        type: 'success'
+                      });
+
+                      location.reload();
+                    } else {
+                      $.notify({
+                        // options
+                        message: '删除失败'
+                      }, {
+                        // settings
+                        type: 'danger'
+                      });
+                    }
+                  },
+                  error: function (jqXHR, textStatus, errorThrown) {
+                    // handle error response
+                  }
+                });
+
+
+
+
+              });
+            });
+            // ----------------------------------弹出框表单处理-----------------------------------------
+
+
+          } else {
+            console.log('localStorage 中没有数据');
+          }
+        });
+      </script>
+      <script>
+        var responseData;
+        $(document).ready(function () {
+          $('#exampleModalChange').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // 触发事件的按钮  
+            console.log(111);
+            const taskrequestData = {
+              created_id: parsedData.id,
+            };
+
+            $.ajax({
+              url: ip + "/task/get_task_list",
+              type: "GET",
+              contentType: "application/json",
+              data: taskrequestData,
+              success: function (data) {
+                // handle success response
+                console.log(data);
+                if (data.code == "200") {
+                  // 获取表格的 tbody 元素
+                  var selectElement = document.getElementById("inputGroupSelect01");
+
+                  // 遍历数据数组，依次将每个对象的数据填充到下拉框中
+                  data.data.forEach(function (item, index) {
+                    var option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.name;
+                    selectElement.appendChild(option);
+                  });
+
+                } else {
+
+                }
+
+
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                // handle error response
+              }
+            });
+            // ----------------------------------弹出框用户处理-----------------------------------------
+
+            $.ajax({
+              url: ip + "/user/getuser",
+              type: "GET",
+              contentType: "application/json",
+              data: taskrequestData,
+              success: function (data) {
+                // handle success response
+                console.log(data);
+                if (data.code == "200") {
+                  // 获取表格的 tbody 元素
+                  var selectElement = document.getElementById("inputGroupSelect02");
+
+                  // 遍历数据数组，依次将每个对象的数据填充到下拉框中
+                  data.data.forEach(function (item, index) {
+                    var option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.nickname;
+                    selectElement.appendChild(option);
+                  });
+
+                } else {
+
+                }
+
+
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                // handle error response
+              }
+            });
+          });
+
+          // 你之前的表单提交事件处理函数可以保持不变  
+          $('#editForm').on('submit', function (e) {
+            e.preventDefault();
+            // 表单提交处理逻辑  
+          });
+        });
+      </script>
+      <script>
+        var responseData;
+        $(document).ready(function () {
+          $('#exampleModalChange2').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // 触发事件的按钮  
+            var itemId = button.data('id'); // 获取data-id属性的值  
+            // 发起请求，这里假设你使用的是jQuery的$.ajax方法  
+            $.ajax({
+              url: ip + '/task/get_onetask_content', // 你的接口地址  
+              method: 'GET',
+              data: { task_id: itemId }, // 将项目ID发送到服务器  
+              success: function (response) {
+
+                console.log(response);
+                responseData = response;
+                // 假设response是一个包含项目数据的对象  
+                $('#recipient-name').val(response.data.name);
+                $('#message-text').val(response.data.description);
+                $('#recipient-status').val(response.data.status);
+                $('#formdate').val(response.data.deadline);
+                // // 设置其他表单字段的值...  
+              },
+              error: function (xhr, status, error) {
+                // 错误处理逻辑  
+                console.error("Error fetching item data: " + error);
+              }
+            });
+          });
+
+          // 你之前的表单提交事件处理函数可以保持不变  
+          $('#editForm').on('submit', function (e) {
+            e.preventDefault();
+            // 表单提交处理逻辑  
+          });
+        });
+      </script>
+      <script>
+        var responseData;
+        $(document).ready(function () {
+          $('#exampleModalChange1').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // 触发事件的按钮  
+            var itemId = button.data('id'); // 获取data-id属性的值  
+            responseData = itemId;
+            $.ajax({
+              url: ip + "/user/getuser",
+              type: "GET",
+              contentType: "application/json",
+              data: {},
+              success: function (data) {
+                // handle success response
+                console.log(data);
+                if (data.code == "200") {
+                  // 获取表格的 tbody 元素
+                  var selectElement1 = document.getElementById("inputGroupSelectedit");
+
+                  // 遍历数据数组，依次将每个对象的数据填充到下拉框中
+                  data.data.forEach(function (item, index) {
+                    var option1 = document.createElement('option');
+                    option1.value = item.id;
+                    option1.textContent = item.nickname;
+                    selectElement1.appendChild(option1);
+                  });
+
+                } else {
+                  console.log("error");
+                }
+
+
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                // handle error response
+              }
+            });
+            // 发起请求，这里假设你使用的是jQuery的$.ajax方法  
+            $.ajax({
+              url: ip + '/task/get_task_user', // 你的接口地址  
+              method: 'GET',
+              data: { task_id: itemId }, // 将项目ID发送到服务器  
+              success: function (response) {
+                console.log(response);
+                const cardBody = document.getElementById("editcard");
+                while (cardBody.firstChild) {
+                  cardBody.removeChild(cardBody.firstChild);
+                }
+                response.forEach(function (item) {
+                  var newBadge = document.createElement("a");
+                  newBadge.href = "#!";
+                  newBadge.className = "badge badge-outline-info selected-badge";
+                  newBadge.textContent = item.username;
+                  newBadge.setAttribute("value", item.id);
+                  newBadge.style.marginLeft = "5px";
+                  cardBody.appendChild(newBadge);
+                })
+
+
+              },
+              error: function (xhr, status, error) {
+                // 错误处理逻辑  
+                console.error("Error fetching item data: " + error);
+              }
+            });
+          });
+
+          // 你之前的表单提交事件处理函数可以保持不变  
+          $('#editForm').on('submit', function (e) {
+            e.preventDefault();
+            // 表单提交处理逻辑  
+          });
+        });
+      </script>
+      <script>
+        // 获取相关元素
+        var selectElement = document.getElementById("inputGroupSelect02");
+        var deleteElement = document.getElementById("deletebtn");
+        var addButton = document.querySelector(".btn-outline-secondary");
+        var cardBody = document.querySelector(".card-body");
+        var saveButton = document.getElementById("save");
+
+        // 监听按钮点击事件
+        addButton.addEventListener("click", function () {
+          var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+          if (selectedOption.value === "请选择...") {
+            alert("请选择一个选项");
+          } else {
+            var existingBadges = document.querySelectorAll(".selected-badge");
+            var isDuplicate = false;
+
+            existingBadges.forEach(function (badge) {
+              if (badge.getAttribute("value") === selectedOption.value) {
+                isDuplicate = true;
+              }
+            });
+
+            if (isDuplicate) {
+              alert("不能添加重复的选项");
+            } else {
+              var newBadge = document.createElement("a");
+              newBadge.href = "#!";
+              newBadge.className = "badge badge-outline-info selected-badge";
+              newBadge.textContent = selectedOption.textContent;
+              newBadge.setAttribute("value", selectedOption.value);
+              newBadge.style.marginLeft = "5px";
+
+              cardBody.appendChild(newBadge);
+            }
+          }
+        });
+        //监听删除事件
+        deleteElement.addEventListener("click", function () {
+          var selectedBadges = document.querySelectorAll(".selected-badge");
+          selectedBadges.forEach(function (badge) {
+            cardBody.removeChild(badge);
+          });
+        });
+
+        // 监听保存按钮点击事件
+        saveButton.addEventListener("click", function () {
+          var selectedBadges = document.querySelectorAll(".selected-badge");
+          const taskrequestData = document.getElementById("inputGroupSelect01").value;
+          var selectedValues = [];
+
+          selectedBadges.forEach(function (badge) {
+            selectedValues.push(badge.getAttribute("value"));
+          });
+          const intselectedValues = []
+
+          selectedValues.forEach(element => {
+            intselectedValues.push(parseInt(element))
+          });
+          console.log(intselectedValues);
+          console.log(taskrequestData);
+          if (intselectedValues.length == 0 || taskrequestData == "请选择...") {
+            alert("请选择一个选项");
+            return;
+          }
+
+          const requestData = {
+            task: taskrequestData,
+            assigned_to: intselectedValues
+          }
+
+          // 在这里可以将所选 badge 的 value 属性值进行进一步处理或提交到后端
+          $.ajax({
+            url: ip + "/task/add_assignment",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(requestData),
+            success: function (data) {
+              // handle success response
+              console.log(data);
+              if (data.code == "200") {
+                $('#exampleModalChange').modal('hide');
+                $('.modal-backdrop').remove();
+
+                $.notify({
+                  // options
+                  message: '新增成功'
+                }, {
+                  // settings
+                  type: 'success'
+                });
+
+                setTimeout(() => {
+                  location.reload();
+                  console.log("跳转");
+                }, 1000);
+
+              } else {
+                $('#exampleModalChange').modal('hide');
+                $('.modal-backdrop').remove();
+                $.notify({
+                  // options
+                  message: '新增失败'
+                }, {
+                  // settings
+                  type: 'danger'
+                });
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              // handle error response
+            }
+          });
+        });
+
+      </script>
+      <!------------------------------------------ 编辑人员编辑modal代码 ------------------------------------------------------>
+      <script>
+        // 获取相关元素
+        var selectElement1 = document.getElementById("inputGroupSelectedit");
+        var deleteElement1 = document.getElementById("deletebtn1");
+        var addButton1 = document.getElementById("addbtn1");
+        var cardBody1 = document.getElementById("editcard");
+        var saveButton1 = document.getElementById("save1");
+
+        // 监听按钮点击事件
+        addButton1.addEventListener("click", function () {
+          var selectedOption = selectElement1.options[selectElement1.selectedIndex];
+
+          if (selectedOption.value === "请选择...") {
+            alert("请选择一个选项");
+          } else {
+            var existingBadges = document.querySelectorAll(".selected-badge");
+            var isDuplicate = false;
+
+            existingBadges.forEach(function (badge) {
+              if (badge.getAttribute("value") === selectedOption.value) {
+                isDuplicate = true;
+              }
+            });
+
+            if (isDuplicate) {
+              alert("不能添加重复的选项");
+            } else {
+              var newBadge = document.createElement("a");
+              newBadge.href = "#!";
+              newBadge.className = "badge badge-outline-info selected-badge";
+              newBadge.textContent = selectedOption.textContent;
+              newBadge.setAttribute("value", selectedOption.value);
+              newBadge.style.marginLeft = "5px";
+
+              cardBody1.appendChild(newBadge);
+            }
+          }
+        });
+        //监听删除事件
+        deleteElement1.addEventListener("click", function () {
+          var cardBody = document.getElementById("editcard");
+          while (cardBody.firstChild) {
+            cardBody.removeChild(cardBody.firstChild);
+          }
+        });
+
+        // 监听保存按钮点击事件
+        saveButton1.addEventListener("click", function () {
+          var cardBody = document.getElementById("editcard");
+
+          // 遍历 cardBody 的子元素
+          var childElements = cardBody.children;
+          var childIds = [];
+
+          for (var i = 0; i < childElements.length; i++) {
+            var childElement = childElements[i];
+
+            // 获取子元素的 id 属性值
+            var id = childElement.getAttribute("value");
+
+            // 将 id 添加到数组中
+            childIds.push(id);
+          }
+
+          // 输出所有子元素的 id
+          console.log(childIds);
+          console.log(responseData);
+          if (childIds.length == 0) {
+            alert("请选择一个选项");
+            return;
+          }
+
+          const requestData = {
+            task: responseData,
+            assigned_to: childIds
+          }
+
+          // 在这里可以将所选 badge 的 value 属性值进行进一步处理或提交到后端
+          $.ajax({
+            url: ip + "/task/editassignment",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(requestData),
+            success: function (data) {
+              // handle success response
+              console.log(data);
+              if (data.code == "200") {
+                $('#exampleModalChange1').modal('hide');
+                $('.modal-backdrop').remove();
+
+                $.notify({
+                  // options
+                  message: '修改成功'
+                }, {
+                  // settings
+                  type: 'success'
+                });
+
+                setTimeout(() => {
+                  location.reload();
+                  console.log("跳转");
+                }, 1000);
+
+              } else {
+                $('#exampleModalChange1').modal('hide');
+                $('.modal-backdrop').remove();
+                $.notify({
+                  // options
+                  message: '修改失败'
+                }, {
+                  // settings
+                  type: 'danger'
+                });
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              // handle error response
+            }
+          });
+        });
+
+      </script>
+      <script>
+        const savebtn2 = document.getElementById("save2");
+
+        savebtn2.addEventListener("click", function () {
+          const name = document.getElementById("recipient-name").value;
+          const description = document.getElementById("message-text").value;
+          const status = document.getElementById("recipient-status").value;
+          const deadline = document.getElementsByName("datetime")[0].value;
+
+          // 将日期时间字符串转换为日期对象
+          const datetime = new Date(deadline);
+
+          // 获取日期部分
+          const date = datetime.toISOString();
+          console.log(date);
+          if (responseData) {
+            // 使用responseData中的数据进行操作
+            console.log(responseData);
+          } else {
+            console.error("Data not available. Please fetch data first.");
+            $.notify({
+              // options
+              message: '数据错误'
+            }, {
+              // settings
+              type: 'danger'
+            });
+          }
+          const requestData = {
+            name: name,
+            description: description,
+            status: status,
+            deadline: date,
+            task_id: responseData.data.id
+          };
+
+          $.ajax({
+            url: ip + "/task/change_task",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(requestData),
+            success: function (data) {
+              // handle success response
+              console.log(data);
+              if (data.code == "200") {
+                $('#exampleModalChange2').modal('hide');
+                $('.modal-backdrop').remove();
+
+                $.notify({
+                  // options
+                  message: '修改成功'
+                }, {
+                  // settings
+                  type: 'success'
+                });
+
+                setTimeout(() => {
+                  location.reload();
+                  console.log("跳转");
+                }, 1500);
+
+              } else {
+                $('#exampleModalChange2').modal('hide');
+                $('.modal-backdrop').remove();
+                $.notify({
+                  // options
+                  message: '新增失败'
+                }, {
+                  // settings
+                  type: 'danger'
+                });
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              // handle error response
+            }
+          });
+        });
+
+      </script>
+      <script>
+        btn = document.getElementById("delete")
+        btn.addEventListener("click", function () {
+          const selectedIds = [];
+          const checkboxes = document.getElementsByClassName('ids');
+
+          for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+              selectedIds.push(parseInt(checkboxes[i].value, 10));
+            }
+          }
+          console.log(selectedIds);
+          if (selectedIds.length === 0) {
+            $.notify({
+              // options
+              message: '未选择任何数据'
+            }, {
+              // settings
+              type: 'danger'
+            });
+
+          } else {
+            requestData = {
+              id: selectedIds
+            }
+
+            $.ajax({
+              url: ip + "/task/delete_TaskAssignment",
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(requestData),
+              success: function (data) {
+                // handle success response
+                console.log(data);
+                if (data.code == "200") {
+                  $.notify({
+                    // options
+                    message: '删除成功'
+                  }, {
+                    // settings
+                    type: 'success'
+                  });
+
+                  setTimeout(() => {
+                    location.reload();
+                  }, 1500);
+
+                } else {
+                  $.notify({
+                    // options
+                    message: '删除失败'
+                  }, {
+                    // settings
+                    type: 'danger'
+                  });
+                }
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                // handle error response
+              }
+            });
+          }
+
+        })
+
+
+
+      </script>
+      <script>
+
+      </script>
+
+</body>
+
+</html>

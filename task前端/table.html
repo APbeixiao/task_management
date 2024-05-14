@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>表格 - 光年(Light Year Admin V4)后台管理系统模板</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+  <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+  <meta name="author" content="yinqi">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="accordion" id="accordionExample">
+            <header class="card-header">
+              <div class="card-title">任务进度详情</div>
+            </header>
+            <div class="card-body">
+
+              <table class="table" id="taskTable">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>名称</th>
+                    <th>内容</th>
+                    <th>状态</th>
+                    <th>进度</th>
+                  </tr>
+                </thead>
+                <tbody id="taskList">
+                  <!-- <tr>
+                    <th scope="row">1</th>
+                    <td>name</td>
+                    <td>description</td>
+                    <td>status</td>
+                    <td>progress</td>
+                  </tr>
+                  <tr>
+                    <td colspan="5">
+                      <div class="card">
+                        <div class="card-header" id="headingTwo">
+                          <div class="card-title">
+                            <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                              aria-controls="collapseTwo" href="#!">name</a>
+                          </div>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                          data-parent="#accordionExample">
+                          <div class="card-body">
+                           
+                            <ul class="lyear-timeline lyear-timeline-center">
+                              <li class="lyear-timeline-date">
+                                <time>created_at</time>
+                              </li>
+
+                              <li class="lyear-timeline-item">
+                                <div class="lyear-timeline-item-action">
+                                  <time>change_date</time>
+                                  <br />
+                                  <small>changed_by 登录了后台管理系统</small>
+                                </div>
+                                <div class="lyear-timeline-item-dot"><span class="badge badge-yellow"></span></div>
+                                <div class="lyear-timeline-item-content">
+                                  <div class="card card-bordered shadow-none">
+                                    <div class="card-body">
+                                      change_reason
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                              <li class="lyear-timeline-item">
+                                <div class="lyear-timeline-item-action">
+                                  <time>change_date</time>
+                                  <br />
+                                  <small>changed_by 登录了后台管理系统</small>
+                                </div>
+                                <div class="lyear-timeline-item-dot"><span class="badge badge-yellow"></span></div>
+                                <div class="lyear-timeline-item-content">
+                                  <div class="card card-bordered shadow-none">
+                                    <div class="card-body">
+                                      change_reason
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>name</td>
+                    <td>description</td>
+                    <td>status</td>
+                    <td>progress</td>
+                  </tr>
+                  <tr>
+                    <td colspan="5">
+                      <div class="card">
+                        <div class="card-header" id="headingTwo">
+                          <div class="card-title">
+                            <a data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+                              aria-controls="collapseTwo" href="#!">任务名字</a>
+                          </div>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                          data-parent="#accordionExample">
+                          <div class="card-body">
+                            话说袭人因问平儿，何事这样忙乱。平儿笑道：“都是世人想不到的，说来也好笑，等几日告诉你，如今没头绪呢，且也不得闲儿。”一语未了，只见李纨的丫鬟来了，说：“平姐姐可在这里，奶奶等你，你怎么不去了？”平儿忙转身出来，口内笑说：“来了，来了。”袭人等笑道：“他奶奶病了，他又成了香饽饽了，都抢不到手。”平儿去了不提。
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr> -->
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <script>
+    var ip = "http://127.0.0.1:8001"
+    document.addEventListener("DOMContentLoaded", function () {
+      // 获取 localStorage 中的数据
+      var myData = window.localStorage.getItem('userdata');
+      var parsedData = JSON.parse(myData);
+      console.log(parsedData);
+      if (myData) {
+        // 发起 Ajax 请求
+
+        const requestData = {
+          assigned_to: parsedData.id,
+        };
+
+        $.ajax({
+          url: ip + "/taskmanage/gettaskmanage",
+          type: "GET",
+          contentType: "application/json",
+          data: requestData,
+          success: function (response) {
+            response.data.forEach(function (item, index) {
+              var row = `
+        <tr>
+          <th scope="row">${index + 1}</th>
+          <td>${item.task.name}</td>
+          <td>${item.task.description}</td>
+          <td><span class="badge badge-warning">${item.task.status}</span></td>
+        <td>
+            <div class="progress progress-striped progress-sm">
+                <div class="progress-bar progress-bar-warning" style="width: ${item.task.progress}%;"></div>
+            </div>
+        </td>
+
+        </tr>
+        <tr>
+          <td colspan="5">
+            <div class="card">
+              
+              <div class="card-header" id="heading${index}">
+                <div class="card-title">
+                  <a data-toggle="collapse" data-target="#collapse${index}" aria-expanded="true" aria-controls="collapse${index}" href="#!">${item.task.name}</a>
+                  
+                </div>
+              </div>
+              <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#accordionExample">
+                <div class="card-body">
+                  <ul class="lyear-timeline lyear-timeline-center">
+                    <li class="lyear-timeline-date">
+                      <time>${formatDate(item.task.created_at)}</time>
+                    </li>
+                    ${item.states.map(function (state) {
+                return `
+                        <li class="lyear-timeline-item">
+                          <div class="lyear-timeline-item-action">
+                            <time>${formatDate(state.change_date)}</time>
+                            <br/>
+                            <small>${state.changed_by} 修改为${state.new_status}</small>
+                          </div>
+                          <div class="lyear-timeline-item-dot"><span class="badge badge-yellow"></span></div>
+                          <div class="lyear-timeline-item-content">
+                            <div class="card card-bordered shadow-none">
+                              <div class="card-body">
+                                ${state.change_reason}
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      `;
+              }).join('')}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+              $('#taskList').append(row);
+            });
+            function formatDate(dateTimeString) {
+              var date = new Date(dateTimeString);
+              var year = date.getFullYear();
+              var month = date.getMonth() + 1;
+              var day = date.getDate();
+              var hours = date.getHours();
+              var minutes = date.getMinutes();
+
+              // 添加前导零以确保两位数格式
+              month = month < 10 ? '0' + month : month;
+              day = day < 10 ? '0' + day : day;
+              hours = hours < 10 ? '0' + hours : hours;
+              minutes = minutes < 10 ? '0' + minutes : minutes;
+
+              return `${year}-${month}-${day} ${hours}:${minutes}`;
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            // handle error response
+          }
+        });
+
+
+
+
+
+      } else {
+        console.log('localStorage 中没有数据');
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>登录页面 </title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+  <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+  <meta name="author" content="yinqi">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="css/animate.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <style>
+    .login-form .has-feedback {
+      position: relative;
+    }
+
+    .login-form .has-feedback .form-control {
+      padding-left: 36px;
+    }
+
+    .login-form .has-feedback .mdi {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: auto;
+      width: 36px;
+      height: 36px;
+      line-height: 36px;
+      z-index: 4;
+      color: #dcdcdc;
+      display: block;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .login-form .has-feedback.row .mdi {
+      left: 15px;
+    }
+  </style>
+</head>
+
+<body class="center-vh" style="background-image: url(images/login-bg-2.jpg); background-size: cover;">
+  <div class="card card-shadowed p-5 w-420 mb-0 mr-2 ml-2">
+    <div class="text-center mb-3">
+      <a href="index.html"> <img alt="light year admin" src="images/logo-sidebar.png"> </a>
+    </div>
+
+    <form action="#!" method="post" class="login-form">
+      <div class="form-group has-feedback">
+        <span class="mdi mdi-account" aria-hidden="true"></span>
+        <input type="text" class="form-control" id="username" placeholder="用户名">
+      </div>
+
+      <div class="form-group has-feedback">
+        <span class="mdi mdi-lock" aria-hidden="true"></span>
+        <input type="password" class="form-control" id="password" placeholder="密码">
+      </div>
+
+      <div class="form-group has-feedback">
+        <span class="mdi mdi-lock" aria-hidden="true"></span>
+        <input type="text" class="form-control" id="nickname" placeholder="昵称">
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="customRadioInline1" value="0" name="customRadioInline" class="custom-control-input">
+          <label class="custom-control-label" for="customRadioInline1">职员</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="customRadioInline2" value="1" name="customRadioInline" class="custom-control-input">
+          <label class="custom-control-label" for="customRadioInline2">领导</label>
+        </div>
+        <!-- <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="customRadioInline3" value="2" name="customRadioInline" class="custom-control-input">
+          <label class="custom-control-label" for="customRadioInline3">经理</label>
+        </div> -->
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-block btn-primary" id="btn" type="button">立即注册</button>
+      </div>
+    </form>
+
+    <!-- <p class="text-center text-muted mb-0">Copyright © 2020 <a href="http://lyear.itshubao.com">IT书包</a>. All right reserved</p> -->
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript">;</script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <script type="text/javascript">
+    var ip = "http://127.0.0.1:8001"
+    var btn = document.getElementById('btn');
+
+    // 添加点击事件处理程序
+    btn.addEventListener('click', function () {
+      const username = document.getElementById('username').value.toString();
+      const password = document.getElementById('password').value.toString();
+      const nickname = document.getElementById('nickname').value.toString();
+      console.log(username);
+      const selectedRadioButton = document.querySelector('input[name="customRadioInline"]:checked');
+      if (selectedRadioButton) {
+        console.log('选中的单选框的值为: ', selectedRadioButton.value);
+        var role = selectedRadioButton.value
+        console.log('选中的单选框的文本内容为: ', selectedRadioButton.nextElementSibling.textContent.trim());
+      } else {
+        console.log('请先选择一个选项');
+        $.notify({
+          // options
+          message: '请先选择一个选项'
+        }, {
+          // settings
+          type: 'danger'
+        });
+        return
+      }
+      const requestData = {
+        username: username,
+        password: password,
+        role: role,
+        nickname: nickname
+      };
+
+      $.ajax({
+        url: ip + "/user/register",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(requestData),
+        success: function (data) {
+          // handle success response
+          console.log(data);
+          if (data.code == "200") {
+            $.notify({
+              // options
+              message: data.msg
+            }, {
+              // settings
+              type: 'success'
+            });
+
+            setTimeout(() => {
+              location.href = "lyear_pages_login_2.html";
+            }, 1500);
+          } else {
+            $.notify({
+              // options
+              message: data.msg
+            }, {
+              // settings
+              type: 'danger'
+            });
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          // handle error response
+        }
+      });
+    });
+
+
+  </script>
+</body>
+
+</html>

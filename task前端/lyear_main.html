@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>开关 - 光年(Light Year Admin V4)后台管理系统模板</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+  <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+  <meta name="author" content="yinqi">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container-fluid p-t-15">
+
+    <div class="row">
+
+      <div class="col-lg-12">
+        <div class="card">
+          <header class="card-header">
+            <div class="card-title">我的任务</div>
+          </header>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>项目名称</th>
+                    <th>项目内容</th>
+                    <th>开始日期</th>
+                    <th>截止日期</th>
+                    <th>状态</th>
+                    <th>进度</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <tr>
+                    <td>1</td>
+                    <td>设计新主题</td>
+                    <td>设计新内容</td>
+                    <td>10/02/2019</td>
+                    <td>12/05/2019</td>
+                    <td><span class="badge badge-warning">待定</span></td>
+                    <td>
+                      <div class="progress progress-striped progress-sm">
+                        <div class="progress-bar progress-bar-warning" style="width: 45%;"></div>
+                      </div>
+                    </td>
+                  </tr> -->
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <header class="card-header">
+            <div class="card-title">任务比例</div>
+          </header>
+          <div class="card-body" style="display: flex;justify-content: center;">
+            <canvas id="chart-pie" width="280" height="280"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card">
+          <header class="card-header">
+            <div class="card-title">任务进度比例</div>
+          </header>
+          <div class="card-body" style="display: flex;justify-content: center;">
+            <canvas id="chart-doughnut" width="280" height="280"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <script type="text/javascript" src="js/Chart.min.js"></script>
+  <script type="text/javascript" src="js/main.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+  <script>
+    var ip = "http://127.0.0.1:8001"
+    var parsedData
+    document.addEventListener("DOMContentLoaded", function () {
+      // 获取 localStorage 中的数据
+      var myData = window.localStorage.getItem('userdata');
+      parsedData = JSON.parse(myData);
+      console.log(parsedData);
+      if (myData) {
+        // 发起 Ajax 请求
+
+        const requestData = {
+          assigned_to: parsedData.id,
+          limit: 10
+        };
+
+        $.ajax({
+          url: ip + "/task/gettask",
+          type: "GET",
+          contentType: "application/json",
+          data: requestData,
+          success: function (data) {
+            // handle success response
+            console.log(data);
+            if (data.code == "200") {
+
+              // 获取表格的 tbody 元素
+              var tbody = document.querySelector('table tbody');
+
+              // 遍历数据数组，依次将每个对象的数据填充到表格中
+              data.data.forEach(function (item, index) {
+                var row = document.createElement('tr');
+
+                row.innerHTML = `
+        <td>${index}</td>
+        <td>${item.name}</td>
+        <td>${item.description}</td>
+        <td>${formatDate(item.created_at)}</td>
+        <td>${item.deadline}</td>
+        <td><span class="badge badge-warning">${item.status}</span></td>
+        <td>
+            <div class="progress progress-striped progress-sm">
+                <div class="progress-bar progress-bar-warning" style="width: ${item.progress}%;"></div>
+            </div>
+        </td>
+    `;
+
+                tbody.appendChild(row);
+              });
+
+              // 格式化日期函数
+              function formatDate(dateString) {
+                var date = new Date(dateString);
+                return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+              }
+            } else {
+              // 
+            }
+            // -------------------------------------------------表格处理-------------------------------------------------
+            $.ajax({
+              url: ip + "/task/get_task_percent",
+              type: "GET",
+              contentType: "application/json",
+              data: {
+                user_id: parsedData.id,
+              },
+              success: function (data) {
+
+                console.log(data);
+                var chartdata = [data.data.unassigned_tasks, data.data.assigned_tasks]
+                console.log(chartdata);
+                new Chart($("#chart-pie"), {
+                  type: 'pie',
+                  data: {
+                    labels: ["我的任务", "任务池"],
+                    datasets: [{
+                      data: chartdata,
+                      backgroundColor: ['rgba(255,99,132,1)', 'rgba(255, 206, 86, 1)']
+                    }]
+                  },
+                  options: {
+                    responsive: false
+                  }
+                });
+
+              }
+            });
+
+            // -------------------------------------------------表格处理-------------------------------------------------
+            $.ajax({
+              url: ip + "/task/get_task_time_percent",
+              type: "GET",
+              contentType: "application/json",
+              data: {
+                user_id: parsedData.id,
+              },
+              success: function (data) {
+
+                console.log(data);
+                var chartdata = [data.data.critical, data.data.Idle, data.data.moderate]
+                new Chart($("#chart-doughnut"), {
+                  type: 'doughnut',
+                  data: {
+                    labels: ["过期", "空闲", "紧急"],
+                    datasets: [{
+                      data: chartdata,
+                      backgroundColor: ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)']
+                    }]
+                  },
+                  options: {
+                    responsive: false
+                  }
+                });
+
+              }
+            });
+
+
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            // handle error response
+          }
+        });
+
+
+
+
+      } else {
+        $.notify({
+          // options
+          message: '登录失败'
+        }, {
+          // settings
+          type: 'danger'
+        });
+        console.log('localStorage 中没有数据');
+      }
+    });
+  </script>
+  <script type="text/javascript">
+
+
+
+
+  </script>
+</body>
+
+</html>

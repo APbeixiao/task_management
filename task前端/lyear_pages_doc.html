@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>文档列表 - 光年(Light Year Admin V4)后台管理系统模板</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="LightYear,LightYearAdmin,光年,后台模板,后台管理系统,光年HTML模板">
+  <meta name="description" content="Light Year Admin V4是一个后台管理系统的HTML模板，基于Bootstrap v4.4.1。">
+  <meta name="author" content="yinqi">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="js/jquery-confirm/jquery-confirm.min.css" rel="stylesheet">
+  <link href="css/animate.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="js/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+  <link href="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+  <link href="js/bootstrap-clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.staticfile.net/layui/2.9.4/css/layui.css" rel="stylesheet"> -->
+</head>
+
+<body>
+
+  <!-- 模态窗口代码-------------------------------------------------------------------------------- -->
+  <div class="container-fluid p-t-15">
+    <div class="modal fade" id="exampleModalChange" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalChangeLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="exampleModalChangeTitle">新增任务</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">任务名:</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">内容:</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="recipient-status" class="col-form-label">状态:</label>
+                <input type="text" class="form-control" id="recipient-status">
+              </div>
+              <div class="form-group">
+                <label for="formControlRange">进度百分比</label>
+                <input type="range" class="form-control-range" id="formControlRange" />
+                <p>当前数值: <span id="rangeValue">50</span></p>
+              </div>
+              <div class="form-group">
+                <label for="formControldate">截止日期</label>
+                <input class="form-control" type="text" id="formdate" data-provide="datetimepicker" name="datetime"
+                  placeholder="请选择具体时间" value="" data-side-by-side="true" data-format="YYYY-MM-DD HH:mm" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="save">保存</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 模态窗口代码-------------------------------------------------------------------------------- -->
+
+
+    <!-- 修改窗口代码-------------------------------------------------------------------------------- -->
+    <div class="container-fluid p-t-15">
+      <div class="modal fade" id="exampleModalChange1" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalChangeLabel1" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title" id="exampleModalChangeTitle1">任务编辑</h6>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="formControlRange">进度百分比</label>
+                  <input type="range" class="form-control-range" id="formControlRange1" />
+                  <p>当前数值: <span id="rangeValue1">50</span></p>
+                </div>
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">修改原因</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="内容"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+              <button type="button" class="btn btn-primary" id="save1">保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 模态窗口代码-------------------------------------------------------------------------------- -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-toolbar d-flex flex-column flex-md-row">
+              <div class="toolbar-btn-action">
+                <a class="btn btn-primary m-r-5" data-toggle="modal" data-target="#exampleModalChange"
+                  data-whatever="@mdo"><i class="mdi mdi-plus"></i> 新增</a>
+                <!-- <a class="btn btn-success m-r-5 ajax-post confirm" href="http://www.lyear.com/doc_test.php"
+                target-form="ids"><i class="mdi mdi-check"></i> 启用</a>
+              <a class="btn btn-warning m-r-5" href="#!"><i class="mdi mdi-block-helper"></i> 禁用</a> -->
+                <a class="btn btn-danger" href="#!" id="delete"><i class="mdi mdi-window-close"></i> 删除</a>
+              </div>
+
+              <form class="search-bar ml-md-auto" method="get" action="#!" role="form">
+                <input type="hidden" name="search_field" id="search-field" value="title" />
+                <div class="input-group ml-md-auto">
+                  <div class="input-group-prepend">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false" id="search-btn">标题</button>
+                    <div class="dropdown-menu" style="">
+                      <a class="dropdown-item" href="#!" data-field="title">标题</a>
+                      <a class="dropdown-item" href="#!" data-field="cat_name">栏目</a>
+                    </div>
+                  </div>
+                  <input type="text" class="form-control" name="keyword" placeholder="请输入名称">
+                </div>
+              </form>
+            </div>
+            <div class="card-body">
+
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="check-all">
+                          <label class="custom-control-label" for="check-all"></label>
+                        </div>
+                      </th>
+                      <th>#</th>
+                      <th>项目名称</th>
+                      <th>项目内容</th>
+                      <th>开始日期</th>
+                      <th>截止日期</th>
+                      <th>状态</th>
+                      <th>进度</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="pagination-container">
+                <ul class="pagination justify-content-center" id="pagination-container"></ul>
+              </div>
+              <!-- <li class="page-item disabled"><span class="page-link">上一页</span></li>
+              <li class="page-item active"><span class="page-link">1</span></li>
+              <li class="page-item"><a class="page-link" href="#1">2</a></li>
+              <li class="page-item"><a class="page-link" href="#1">3</a></li>
+              <li class="page-item"><a class="page-link" href="#1">4</a></li>
+              <li class="page-item"><a class="page-link" href="#1">5</a></li>
+              <li class="page-item disabled"><span class="page-link">...</span></li>
+              <li class="page-item"><a class="page-link" href="#!">14452</a></li>
+              <li class="page-item"><a class="page-link" href="#!">14453</a></li>
+              <li class="page-item"><a class="page-link" href="#!">下一页</a></li> -->
+
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/lyear-loading.js"></script>
+    <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+    <script type="text/javascript" src="js/jquery-confirm/jquery-confirm.min.js"></script>
+    <script type="text/javascript" src="js/main.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!--日期选择器-->
+    <script type="text/javascript" src="js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <!--时间日期选择器-->
+    <script type="text/javascript" src="js/moment.js/moment.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="js/moment.js/locale/zh-cn.min.js"></script>
+    <!--时间选择器-->
+    <script type="text/javascript" src="js/bootstrap-clockpicker/bootstrap-clockpicker.min.js"></script>
+    <script type="text/javascript" src="js/main.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
+    <!-- 分页js -->
+    <!-- <script src="https://cdn.staticfile.net/layui/2.9.4/layui.js"></script> -->
+
+
+    <script>
+      var ip = "http://127.0.0.1:8001"
+      var parsedData
+      var limit = 10; // 示例值，根据实际情况设置  
+      var currentPage = 1; // 当前页码  
+      var totalPages = 0; // 总页数  
+      document.addEventListener("DOMContentLoaded", function () {
+        // 获取 localStorage 中的数据
+        var myData = window.localStorage.getItem('userdata');
+        parsedData = JSON.parse(myData);
+        console.log(parsedData);
+
+
+        function initializeTableAndPagination(data, count) {
+          refreshTable(data);
+          totalPages = Math.ceil(count / limit);
+          renderPagination(currentPage, totalPages);
+          bindPaginationEvents();
+        }
+
+        // 渲染分页控件  
+        function renderPagination(currentPage, totalPages) {
+          console.log(currentPage, totalPages);
+          var paginationHtml = '<ul class="pagination">';
+
+          // 添加首页按钮  
+          paginationHtml += '<li class="page-item ' + (currentPage === 1 ? 'disabled' : '') + '"><a class="page-link" href="#" data-page="1">首页</a></li>';
+
+          var maxButtons = 5; // 定义最多显示几个页码按钮（不包括首页和尾页）  
+          var startPage, endPage;
+
+          if (totalPages <= maxButtons + 2) {
+            // 如果总页数小于或等于最大页码数加2（首页和尾页），则显示所有页码  
+            startPage = 1;
+            endPage = totalPages;
+          } else {
+            // 计算要显示的页码范围  
+            var delta = Math.floor(maxButtons / 2);
+            if (currentPage - delta < 1) {
+              startPage = 1;
+              endPage = maxButtons + 1;
+            } else if (currentPage + delta > totalPages) {
+              startPage = totalPages - maxButtons;
+              endPage = totalPages;
+            } else {
+              startPage = currentPage - delta;
+              endPage = currentPage + delta;
+            }
+          }
+
+          // 添加中间页码按钮  
+          for (var page = startPage; page <= endPage; page++) {
+            var activeClass = (page === currentPage) ? 'active' : '';
+            paginationHtml += '<li class="page-item ' + activeClass + '"><a class="page-link" href="#" data-page="' + page + '">' + page + '</a></li>';
+          }
+
+          // 如果页码过多，则添加省略号  
+          if (startPage > 2) {
+            paginationHtml += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+          }
+          if (endPage < totalPages - 1) {
+            paginationHtml += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+          }
+
+          // 添加尾页按钮  
+          paginationHtml += '<li class="page-item ' + (currentPage === totalPages ? 'disabled' : '') + '"><a class="page-link" href="#" data-page="' + totalPages + '">尾页</a></li>';
+
+          paginationHtml += '</ul>';
+
+          $('#pagination-container').html(paginationHtml);
+        }
+        function bindPaginationEvents() {
+          $('.page-link').off('click').on('click', function (e) {
+            e.preventDefault();
+            var page = $(this).data('page');
+            if (page !== currentPage) {
+              currentPage = page; // 更新当前页码  
+              fetchData(page); // 获取新页码的数据  
+              renderPagination(); // 重新渲染分页控件  
+            }
+          });
+        }
+
+        // 刷新表格数据  
+        function refreshTable(data) {
+          var tbody = $('table tbody');
+          tbody.empty();
+          $.each(data, function (index, item) {
+            var row = $('<tr>');
+
+            row.append('<td><div class="custom-control custom-checkbox"><input type="checkbox" class="cu stom-control-input ids" name="ids" value="' + item.id + '" id="ids-' + item.id + '"><label class="custom-control-label" for="ids-' + item.id + '"></label></div></td>');
+            row.append('<td>' + index + '</td>');
+            row.append('<td>' + item.name + '</td>');
+            row.append('<td>' + item.description + '</td>');
+            row.append('<td>' + formatDate(item.created_at) + '</td>');
+            row.append('<td>' + item.deadline + '</td>');
+            row.append('<td><span class="badge badge-warning">' + item.status + '</span></td>');
+            row.append('<td><div class="progress progress-striped progress-sm"><div class="progress-bar progress-bar-warning" style="width: ' + item.progress + '%;"></div></div></td>');
+            row.append('<td><div class="btn-group"><a class="btn btn-xs btn-default edit-item" href="#" data-toggle="modal" data-target="#exampleModalChange1" data-id="' + item.id + '" data-original-title="编辑"><i class="mdi mdi-pencil"></i></a><a class="btn btn-xs btn-default delete" value="' + item.id + '" title="" data-toggle="tooltip" data-original-title="删除"><i class="mdi mdi-window-close"></i></a></div></td>');
+
+            tbody.append(row);
+          })
+        }
+        function formatDate(dateString) {
+          var date = new Date(dateString);
+          return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+        }
+
+        // 获取数据  
+        function fetchData(page) {
+          $.ajax({
+            url: ip + "/task/get_limit_task",
+            type: "GET",
+            contentType: "application/json",
+            data: {
+              limit: limit,
+              assigned_to: parsedData.id,
+              skip: (page - 1) * limit
+            },
+            success: function (response) {
+              var data = response.data;
+              var count = response.count;
+              initializeTableAndPagination(data, count);
+            },
+            error: function (error) {
+              console.error('Error fetching data: ', error);
+            }
+          });
+        }
+
+        if (myData) {
+
+          fetchData(1);
+
+
+        } else {
+          console.log('localStorage 中没有数据');
+        }
+
+
+      });
+
+    </script>
+    <script>
+      $(document).ready(function () {
+        $(document).on('click', '.delete', function () {
+          var value = $(this).attr('value');
+          $.ajax({
+            url: ip + "/task/delete",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              task_id: value
+            }),
+            success: function (data) {
+              // handle success response
+              console.log(data);
+              if (data.code == "200") {
+                $.notify({
+                  // options
+                  message: '删除成功'
+                }, {
+                  // settings
+                  type: 'success'
+                });
+
+                location.reload();
+              } else {
+                $.notify({
+                  // options
+                  message: '删除失败'
+                }, {
+                  // settings
+                  type: 'danger'
+                });
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              // handle error response
+            }
+          });
+
+
+
+
+        });
+      });
+
+    </script>
+    <script>
+      var responseData;
+      $(document).ready(function () {
+        $('#exampleModalChange1').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget); // 触发事件的按钮  
+          var itemId = button.data('id'); // 获取data-id属性的值  
+          console.log(itemId);
+          // 发起请求，这里假设你使用的是jQuery的$.ajax方法  
+          $.ajax({
+            url: ip + '/task/get_onetask_content', // 你的接口地址  
+            method: 'GET',
+            data: { task_id: itemId }, // 将项目ID发送到服务器  
+            success: function (response) {
+
+              console.log(response);
+              responseData = response; // 将接口返回的数据存储在全局变量中
+              // 假设response是一个包含项目数据的对象  
+              $('#formControlRange1').val(response.data.progress);
+              $('#rangeValue1').text(response.data.progress);
+              // 设置其他表单字段的值...  
+            },
+            error: function (xhr, status, error) {
+              // 错误处理逻辑  
+              console.error("Error fetching item data: " + error);
+            }
+          });
+        });
+
+        // 你之前的表单提交事件处理函数可以保持不变  
+        $('#editForm').on('submit', function (e) {
+          e.preventDefault();
+          // 表单提交处理逻辑  
+        });
+      });
+    </script>
+    <script>
+      const rangeInput = document.getElementById("formControlRange");
+      const rangeValue = document.getElementById("rangeValue");
+
+      rangeInput.addEventListener("input", function () {
+        rangeValue.innerText = rangeInput.value;
+      });
+
+      const rangeInput1 = document.getElementById("formControlRange1");
+      const rangeValue1 = document.getElementById("rangeValue1");
+
+      rangeInput1.addEventListener("input", function () {
+        rangeValue1.innerText = rangeInput1.value;
+      });
+    </script>
+    <script>
+      const savebtn = document.getElementById("save");
+
+      savebtn.addEventListener("click", function () {
+        const name = document.getElementById("recipient-name").value;
+        const description = document.getElementById("message-text").value;
+        const status = document.getElementById("recipient-status").value;
+        const progress = document.getElementById("formControlRange").value;
+        const deadline = document.getElementsByName("datetime")[0].value;
+
+        // 将日期时间字符串转换为日期对象
+        const datetime = new Date(deadline);
+
+        // 获取日期部分
+        const date = datetime.toISOString();;
+        console.log(date);
+        var myData = window.localStorage.getItem('userdata');
+        var parsedData = JSON.parse(myData);
+        const requestData = {
+          name: name,
+          description: description,
+          status: status,
+          progress: progress,
+          deadline: date,
+          created_user: parsedData.id
+        };
+
+        $.ajax({
+          url: ip + "/task/addtask",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(requestData),
+          success: function (data) {
+            // handle success response
+            console.log(data);
+            if (data.code == "200") {
+              $('#exampleModalChange').modal('hide');
+              $('.modal-backdrop').remove();
+
+              $.notify({
+                // options
+                message: '新增成功'
+              }, {
+                // settings
+                type: 'success'
+              });
+              location.reload();
+            } else {
+              $('#exampleModalChange').modal('hide');
+              $('.modal-backdrop').remove();
+              $.notify({
+                // options
+                message: '新增失败'
+              }, {
+                // settings
+                type: 'danger'
+              });
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            // handle error response
+          }
+        });
+      });
+
+    </script>
+    <script>
+      const savebtn1 = document.getElementById("save1");
+
+      savebtn1.addEventListener("click", function () {
+
+        const change_reason = document.getElementById("exampleFormControlTextarea1").value;
+        const new_status = document.getElementById("formControlRange1").value;
+        if (responseData || parsedData) {
+          // 使用responseData中的数据进行操作
+          console.log(responseData, parsedData);
+        } else {
+          console.error("Data not available. Please fetch data first.");
+          $.notify({
+            // options
+            message: '数据错误'
+          }, {
+            // settings
+            type: 'danger'
+          });
+        }
+        const requestData = {
+
+          new_status: new_status,
+          change_reason: change_reason,
+          task_id: responseData.data.id,
+          changed_by: parsedData.id
+        };
+
+
+        $.ajax({
+          url: ip + "/taskmanage/addtaskmanage",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(requestData),
+          success: function (data) {
+            // handle success response
+            console.log(data);
+            if (data.code == "200") {
+              $('#exampleModalChange').modal('hide');
+              $('.modal-backdrop').remove();
+
+              $.notify({
+                // options
+                message: '新增成功'
+              }, {
+                // settings
+                type: 'success'
+              });
+
+              setTimeout(function () {
+                location.reload();
+              }, 1500);
+            } else {
+              $('#exampleModalChange').modal('hide');
+              $('.modal-backdrop').remove();
+              $.notify({
+                // options
+                message: '新增失败'
+              }, {
+                // settings
+                type: 'danger'
+              });
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            // handle error response
+          }
+        });
+      });
+
+    </script>
+    <script>
+      btn = document.getElementById("delete")
+      btn.addEventListener("click", function () {
+        const selectedIds = [];
+        const checkboxes = document.getElementsByClassName('ids');
+
+        for (let i = 0; i < checkboxes.length; i++) {
+          if (checkboxes[i].checked) {
+            selectedIds.push(parseInt(checkboxes[i].value, 10));
+          }
+        }
+        console.log(selectedIds);
+        if (selectedIds.length === 0) {
+          $.notify({
+            // options
+            message: '未选择任何数据'
+          }, {
+            // settings
+            type: 'danger'
+          });
+
+        } else {
+          requestData = {
+            task_id: selectedIds
+          }
+
+          $.ajax({
+            url: ip + "/task/delete",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(requestData),
+            success: function (data) {
+              // handle success response
+              console.log(data);
+              if (data.code == "200") {
+                $.notify({
+                  // options
+                  message: '删除成功'
+                }, {
+                  // settings
+                  type: 'success'
+                });
+
+                location.reload();
+              } else {
+                $.notify({
+                  // options
+                  message: '删除失败'
+                }, {
+                  // settings
+                  type: 'danger'
+                });
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              // handle error response
+            }
+          });
+        }
+
+      })
+
+
+
+    </script>
+    <script>
+      //       $.ajax({
+      //         url: ip + "/task/gettask",
+      //         type: "GET",
+      //         contentType: "application/json",
+      //         data: requestData,
+      //         success: function (data) {
+      //           // handle success response
+      //           console.log(data);
+      //           if (data.code == "200") {
+
+      //             // 获取表格的 tbody 元素
+      //             var tbody = document.querySelector('table tbody');
+
+      //             // 遍历数据数组，依次将每个对象的数据填充到表格中
+      //             data.data.forEach(function (item, index) {
+      //               var row = document.createElement('tr');
+
+      //               row.innerHTML = `
+      //             <td>
+      //                   <div class="custom-control custom-checkbox">
+      //                     <input type="checkbox" class="custom-control-input ids" name="ids" value="${item.id}" id="ids-${item.id}">
+      //                     <label class="custom-control-label" for="ids-${item.id}"></label>
+      //                   </div>
+      //                 </td>
+      //     <td>${index}</td>
+      //     <td>${item.name}</td>
+      //     <td>${item.description}</td>
+      //     <td>${formatDate(item.created_at)}</td>
+      //     <td>${item.deadline}</td>
+      //     <td><span class="badge badge-warning">${item.status}</span></td>
+      //     <td>
+      //         <div class="progress progress-striped progress-sm">
+      //             <div class="progress-bar progress-bar-warning" style="width: ${item.progress}%;"></div>
+      //         </div>
+      //     </td>
+      //     <td>
+      //                   <div class="btn-group">
+      //                     <a class="btn btn-xs btn-default edit-item" href="#" data-toggle="modal" data-target="#exampleModalChange1" data-id="${item.id}" data-original-title="编辑"><i class="mdi mdi-pencil"></i></a>
+      //                     <a class="btn btn-xs btn-default delete "  value="${item.id}"
+      //                       title="" data-toggle="tooltip" data-original-title="删除"><i
+      //                         class="mdi mdi-window-close"></i></a>
+
+      //                   </div>
+      //                 </td>
+      // `;
+
+      //               tbody.appendChild(row);
+      //             });
+
+      //             // 格式化日期函数
+      //             function formatDate(dateString) {
+      //               var date = new Date(dateString);
+      //               return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+      //             }
+
+
+      //             // ----------------------------------处理点击事件-----------------------------------------
+
+      //           } else {
+      //             // $.notify({
+      //             //   // options
+      //             //   message: '登录失败'
+      //             // }, {
+      //             //   // settings
+      //             //   type: 'danger'
+      //             // });
+      //           }
+
+
+      //         },
+      //         error: function (jqXHR, textStatus, errorThrown) {
+      //           // handle error response
+      //         }
+      //       });
+    </script>
+</body>
+
+</html>
